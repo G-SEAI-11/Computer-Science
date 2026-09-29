@@ -1,4 +1,4 @@
-# # Kontrollfluss mit if und while
+# * Die Mögliche Auswahl an Getränken
 getraenke = {
     1: {"name": "Wasser", "preis": 1.0, "bestand": 10},
     2: {"name": "Cola", "preis": 1.5, "bestand": 5},
