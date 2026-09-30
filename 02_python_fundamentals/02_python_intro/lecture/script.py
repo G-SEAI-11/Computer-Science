@@ -91,7 +91,9 @@ print("--- Mit Zahlen arbeiten ---")
 a = 10
 b = 3
 
+
 print("a + b:", a + b)
+print(0.1 + 0.2)
 print("a - b:", a - b)
 print("a * b:", a * b)
 # * / liefert auch bei zwei int-Werten einen float. // rundet den Quotienten
@@ -99,6 +101,9 @@ print("a * b:", a * b)
 print("a / b:", a / b)
 print("a // b:", a // b)  # floor division
 print("a % b:", a % b)  # Modulo
+# 7/2= 3.5 → Nimm ganze Zahl → 3
+# 2*3=6
+# 7-6=1
 print("a ** b:", a**b)  # Potenz
 
 # * Für diese gemischte Addition wird der int-Wert als float behandelt;
