@@ -1,5 +1,5 @@
 print("---Set anlegen---")
-fruits = {"apple", "banana", "cherry", "apple", "mango", "pear"}
+fruits = {"apple", "banana", "cherry", "apple", "mango", "pear"}  # noqa: B033
 print(fruits)
 print(type(fruits))
 print("Length of set:", len(fruits))
