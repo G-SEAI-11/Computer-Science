@@ -1,39 +1,58 @@
+# Eine Node (Knoten) ist ein einzelnes Glied der Kette: Er speichert einen Wert
+# und einen Pointer ('next') auf die nächste Node. None bedeutet: Hier endet die Kette.
+# Anders als bei einer Python-Liste liegen die Elemente nicht nebeneinander im Speicher –
+# jede Node weiß nur, wo ihr Nachfolger ist.
 class Node:
     def __init__(self, value, next=None) -> None:
         self.value = value
         self.next = next
 
 
+# Die LinkedList selbst kennt nur die erste Node ('head').
+# Alle anderen Nodes erreichen wir nur, indem wir uns von head aus über die next-Pointer weiterhangeln.
 class LinkedList:
     def __init__(self) -> None:
         self.head = None
-        # self.tail = None
+        # self.tail = None # Wir können die Klasse noch erweitern. Nichts spricht dagegen, auch eine Referenz auf die letzte Node zu halten.
 
+    # append: hängt eine neue Node ans Ende der Kette
     def append(self, value):  # O(n)
         new_node = Node(value)
 
+        # Die Liste ist leer: die neue Node wird zum head
         if not self.head:
             self.head = new_node
         else:
+            # Traversal: Wir starten bei head und folgen den next-Pointern,
+            # bis wir bei der letzten Node angelangt sind (wo next None ist).
+            # Deshalb O(n) – wir müssen einmal durch die ganze Kette laufen.
             current_node = self.head
-            while current_node.next:  # Traversal / Traversierung
+            while current_node.next:
                 current_node = current_node.next
 
+            # Die bisher letzte Node zeigt jetzt auf die neuen
             current_node.next = new_node
 
+    # prepend: setzt eine neue Node an den Anfang – O(1), denn kein Traversal nötig.
+    # Neue Node zeigt auf den alten head und wird selbst zum neuen head.
     def prepend(self, value):
         new_node = Node(value, self.head)
         self.head = new_node
 
+    # pop: entfernt den letzten Knoten und gibt seinen Wert zurück
     def pop(self):  # O(n)
+        # Leere Liste: nichts zu entfernen
         if not self.head:
             return None
 
+        # Nur eine Node: Kopf entfernen
         if not self.head.next:
             val = self.head.value
             self.head = None
             return val
 
+        # Wir brauchen zwei Pointer: Die letzte Node wollen wir entfernen,
+        # aber ändern müssen wir die vorletzte ('prev_node') – next muss dort auf None gesetzt werden.
         current_node = self.head
         prev_node = self.head
 
@@ -41,6 +60,8 @@ class LinkedList:
             prev_node = current_node
             current_node = current_node.next
 
+        # Die letzte Node "abschneiden": Ohne Pointer auf ist sie nicht mehr Teil der Kette. Der Garbage Collector in Python kümmert sich
+        # automatisch um das unverbundene Objekt und löscht es.
         val = current_node.value
         prev_node.next = None
         return val
@@ -48,6 +69,7 @@ class LinkedList:
     def remove(self, value):
         pass
 
+    # __str__ bestimmt, was print() ausgibt.
     def __str__(self):
         nodes = []
         curr = self.head
@@ -60,6 +82,7 @@ class LinkedList:
 
 my_linked_list = LinkedList()
 
+# Eine LinkedList kann – wie eine Python-Liste – Werte beliebigen Typs speichern
 my_linked_list.append(42)
 my_linked_list.append("test")
 my_linked_list.append(False)
