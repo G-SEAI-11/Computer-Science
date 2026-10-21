@@ -1,4 +1,4 @@
-# Eine Node (Knoten) ist ein einzelnes Glied der Kette: Er speichert einen Wert
+# Eine Node (Knoten) ist ein einzelnes Glied der Kette: Sie speichert einen Wert
 # und einen Pointer ('next') auf die nächste Node. None bedeutet: Hier endet die Kette.
 # Anders als bei einer Python-Liste liegen die Elemente nicht nebeneinander im Speicher –
 # jede Node weiß nur, wo ihr Nachfolger ist.
