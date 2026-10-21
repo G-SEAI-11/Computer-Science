@@ -21,11 +21,53 @@ intervals2 = [[7, 10], [2, 4]]
 # Explanation: [2,4] ends before [7,10] starts, so no overlap
 
 
-def canAttendMeetings(intervals):
-    pass
+# Standardlösung 1 Brute Force Ansatz — jedes Paar einzeln prüfen — O(n²)
 
 
-print(canAttendMeetings(intervals))
+# Hilfsfunktion: Prüft ob zwei Meetings i und j sich überlappen.
+# Zwei Intervalle überlappen sich, wenn das eine startet, bevor das andere endet —
+# egal welches der beiden früher beginnt.
+def overlap(i, j):
+    start_1, end_1 = i
+    start_2, end_2 = j
+    return (start_1 >= start_2 and start_1 < end_2) or (
+        start_2 >= start_1 and start_2 < end_1
+    )
+
+
+def canAttendMeetings(intervals: list[list[int]]) -> bool:
+    # Äußere Schleife: jedes Meeting einmal als "erstes" betrachten
+    for i in range(len(intervals)):
+        # Innere Schleife: nur Meetings nach i prüfen (bereits geprüfte Paare überspringen)
+        # → Ergibt O(n²) Vergleiche insgesamt
+        for j in range(i + 1, len(intervals)):
+            if overlap(intervals[i], intervals[j]):
+                return False
+
+    return True
+
+
+# Standardlösung 2: Sortieren + linearer Scan — O(n log n)
+def canAttendMeetings(intervals: list[list[int]]) -> bool:
+
+    # Nach Startzeit sortieren. Danach liegen sich überlappende Meetings
+    # immer nebeneinander — wir müssen also nur benachbarte Paare prüfen.
+    # Achtung! Mutiert die Originalliste!
+    intervals.sort()
+
+    # Jeden Meeting-Index ab dem zweiten durchlaufen
+    for i in range(1, len(intervals)):
+        # Überlappung: Das aktuelle Meeting startet, bevor das vorherige endet
+        if intervals[i][0] < intervals[i - 1][1]:
+            return False
+
+    # Kein Überlappung gefunden → alle Meetings können besucht werden
+    return True
+
+
+# Ansatz Set Intersectionen - An sich ist set() & set() sehr schnell ( O( mächtigkeit_kleineres_set ) )
+# die termin_listen kännen aber sehr groß werden
+# der erhöhte Speicherbedarf und die Erzeugung von Sets, die jeweils so groß sind, wie die einzelnen Intervalle, bringen diesen interessanten Ansatz unter die Performanz des Brute Force Ansatzes
 
 
 def intersects(termine):
@@ -40,6 +82,9 @@ def intersects(termine):
                 return False
     return True
 
+
+# Optimiert durch vorherige Sortierung -> O(n log n)
+# Das ermöglicht einfahc immer das Ende eines Termins mit dem Anfang des nächsten Temins zu vergleichen
 
 from collections import deque
 
@@ -76,10 +121,12 @@ print(my_intervals.check_appointment_conflicts())
 
 # ------------------------------------
 
+# Gleicher Ansatz: Sortieren, Ende des Termins mit dem nächsten Anfang vergleichen
+
 
 def meetings2(list_i):
     # list_i.sort()
-    intervalle_sorted = sorted(list_i)  # O(n log n) <-
+    intervalle_sorted = sorted(list_i)  # O(n log n) <- Dominante Operation
     print(intervalle_sorted)
 
     for i in range(1, len(intervalle_sorted)):  # O(n)
@@ -91,22 +138,6 @@ def meetings2(list_i):
 
 
 termine = [[0, 30], [5, 10], [15, 20]]
-
-
-def overlap(i, j):
-    start_1, end_1 = i
-    start_2, end_2 = j
-    return (start_1 >= start_2 and start_1 < end_2) or (
-        start_2 >= start_1 and start_2 < end_1
-    )
-
-
-def canAttendMeetings(intervals):
-    for i in range(len(intervals)):
-        for j in range(i + 1, len(intervals)):
-            if overlap(intervals[i], intervals[j]):
-                return False
-    return True
 
 
 # -------------------------------------

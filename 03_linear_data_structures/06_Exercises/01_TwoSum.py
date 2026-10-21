@@ -23,17 +23,34 @@ target = 9
 # Output: [0, 1]
 
 
-def twoSum(arr: list[int], target: int):
-    pass
+# Standardlösung 1 mit Hashtable (Dictionary)-Lookup
+def twoSum(arr: list[int], target: int):  # O(n) - Linear
+    # seen ist ein Dictionary: {Zahl -> Index}
+    # Damit können wir in O(1) nachschlagen, ob eine bestimmte Zahl schon vorgekommen ist
+    seen = {}  # O(1)
+
+    for index, value in enumerate(arr):  # O(n) <- Dominante Operation
+        # Welche Zahl fehlt uns noch, damit die Summe target ergibt?
+        diff = target - value  # O(1)
+
+        if diff in seen:  # O(1)
+            # Die fehlende Zahl war schon in seen — wir haben das Paar gefunden
+            return [seen[diff], index]
+        else:
+            # Noch kein Treffer — aktuelle Zahl mit Index für spätere Suchen merken
+            seen[value] = index
 
 
-# print(twoSum(nums, target))
-
-
-# * Example 1:
-# vorgegebene Zahlenliste
-nummern = [2, 7, 11, 15]
-# Zielzahl ist 9
+# Standardlösung 2 mit Brute-Force-Vergleichen
+def twoSum(arr: list[int], target: int):  # O(n²) <- Quadratisch
+    # Äußere Schleife: wählt nacheinander jedes Element als erstes des Paares
+    for i in range(len(arr)):  # O(n)
+        # Innere Schleife: startet bei i+1, damit kein Element doppelt gezählt wird
+        # und wir nicht dasselbe Paar zweimal prüfen (z.B. [0,1] und [1,0])
+        for j in range(i + 1, len(arr)):  # O(n²) <- dominiert die Gesamtkomplexität
+            # Passen die beiden Zahlen zusammen?
+            if arr[i] + arr[j] == target:
+                return [i, j]
 
 
 def suche_result(nums, result):  # O(n)
@@ -79,9 +96,9 @@ def two_sum_O2(nums, target):  # [2, 7, 11, 15]
     return output
 
 
-def two_sum_On(nums, target):
+def two_sum_Onlogn(nums, target):
     paare = [(num, index_ori) for index_ori, num in enumerate(nums)]
-    paare.sort()
+    paare.sort()  # O(n log n)
 
     li = 0
     re = len(paare) - 1
@@ -126,23 +143,6 @@ def find_sum(list, target):
 
 
 nums = [2, 7, 11, 13]
-
-
-def twoSum(arr: list[int], target: int):  # O(n) - Linear
-    # seen ist ein Dictionary: {Zahl -> Index}
-    # Damit können wir in O(1) nachschlagen, ob eine bestimmte Zahl schon vorgekommen ist
-    seen = {}  # O(1)
-
-    for index, value in enumerate(arr):  # O(n) <- Dominante Operation
-        # Welche Zahl fehlt uns noch, damit die Summe target ergibt?
-        diff = target - value  # O(1)
-
-        if diff in seen:  # O(1)
-            # Die fehlende Zahl war schon in seen — wir haben das Paar gefunden
-            return [seen[diff], index]
-        else:
-            # Noch kein Treffer — aktuelle Zahl mit Index für spätere Suchen merken
-            seen[value] = index
 
 
 # -------------------------------------
