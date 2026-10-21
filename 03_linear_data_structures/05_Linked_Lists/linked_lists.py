@@ -66,8 +66,52 @@ class LinkedList:
         prev_node.next = None
         return val
 
-    def remove(self, value):
-        pass
+    # def remove(self, value):
+    #     pass
+
+    # def remove(self, value):
+    #     #############################################
+    #     if not self.head:
+    #         return None
+
+    #     prev_node = self.head
+    #     found_node = prev_node.next
+
+    #     while prev_node is not None and prev_node.next != value:
+    #         prev_node = found_node
+    #         if prev_node is not None and prev_node.next == value:
+    #             found_node = prev_node.next
+    #             prev_node.next = found_node.next
+
+    #             val = found_node.value
+    #             found_node.next = None
+
+    #             return val
+    #     return None
+
+    # def remove_by_value(self, value):
+    #     if self.head == None:
+    #         return "Nothing to remove"
+    #     aktueller_knoten = self.head
+    #     letzter_knoten = None
+    #     while aktueller_knoten:
+
+    #         if (
+    #             aktueller_knoten.value == value and aktueller_knoten is self.head
+    #         ):  # wenn es der erste Knoten ist, dann wird der einfach ausgehängt
+    #             self.head = aktueller_knoten.next
+    #             break
+
+    #         elif aktueller_knoten.value == value:
+    #             letzter_knoten.next = aktueller_knoten.next
+    #             print(
+    #                 f"{letzter_knoten.value} mit {aktueller_knoten.next.value if aktueller_knoten.next else "Nichts"} verbunden"
+    #             )
+    #             aktueller_knoten = aktueller_knoten.next
+
+    #         else:
+    #             letzter_knoten = aktueller_knoten
+    #             aktueller_knoten = aktueller_knoten.next
 
     # __str__ bestimmt, was print() ausgibt.
     def __str__(self):
@@ -89,6 +133,8 @@ my_linked_list.append(False)
 my_linked_list.append(123)
 my_linked_list.append(1.23)
 
+print(my_linked_list)
+my_linked_list.remove_by_value("test")
 print(my_linked_list)
 
 
