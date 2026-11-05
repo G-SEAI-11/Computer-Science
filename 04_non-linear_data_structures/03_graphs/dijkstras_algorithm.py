@@ -66,19 +66,6 @@ class Graph:
             )  # Derselbe Index liefert den passenden Knotennamen.
 
 
-graph = Graph(["A", "B", "C", "D", "E", "F"])
-graph.add_edge("A", "B", 4)
-graph.add_edge("A", "C", 5)
-graph.add_edge("B", "C", 11)
-graph.add_edge("B", "D", 9)
-graph.add_edge("B", "E", 7)
-graph.add_edge("C", "E", 3)
-graph.add_edge("D", "E", 13)
-graph.add_edge("D", "F", 2)
-graph.add_edge("E", "F", 6)
-graph.print_matrix()
-
-
 def closest_unvisited(distances, visited):
     closest = None  # Noch kein erreichbarer, unbesuchter Knoten gefunden.
     smallest_distance = float("inf")
@@ -125,6 +112,36 @@ def dijkstra(graph, start):
     return distances, previous
 
 
+graph = Graph(["A", "B", "C", "D", "E", "F"])
+graph.add_edge("A", "B", 4)
+graph.add_edge("A", "C", 5)
+graph.add_edge("B", "C", 11)
+graph.add_edge("B", "D", 9)
+graph.add_edge("B", "E", 7)
+graph.add_edge("C", "E", 3)
+graph.add_edge("D", "E", 13)
+graph.add_edge("D", "F", 2)
+graph.add_edge("E", "F", 6)
+graph.print_matrix()
+
 distances, previous = dijkstra(graph, "A")
 print("Costs from A:", distances)
 print("Previous:", previous)
+
+
+def build_path(previous, start, destination):
+    path = []
+    current = destination
+    while current is not None:
+        path.append(current)
+        current = previous[
+            current
+        ]  # Zum Vorgänger zurückgehen, bis zur Wurzel mit None.
+    path.reverse()  # Gesammelt wurde vom Ziel zurück zum Start.
+    if path[0] != start:
+        return []  # Das Ziel wurde vom Start aus nicht erreicht.
+    return path
+
+
+print("Path:", build_path(previous, "A", "F"))
+print("Cost:", distances["F"])
