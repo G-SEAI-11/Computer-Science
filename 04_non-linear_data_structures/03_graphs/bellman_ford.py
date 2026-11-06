@@ -107,3 +107,23 @@ def bellman_ford(graph, start):
 
 distances, previous = bellman_ford(lms_graph, "A")
 print("Costs from A:", distances)
+
+
+def build_path(previous, start, destination):
+    path = []
+    current = destination
+    while current is not None:
+        path.append(current)
+        current = previous[
+            current
+        ]  # Zum Vorgänger zurückgehen, bis zur Wurzel mit None.
+    path.reverse()  # Gesammelt wurde vom Ziel zurück zum Start.
+    if path[0] != start:
+        return []  # Das Ziel wurde vom Start aus nicht erreicht.
+    return path
+
+
+print("Path to C:", build_path(previous, "A", "C"))
+print("Cost to C:", distances["C"])
+print("Path to D:", build_path(previous, "A", "D"))
+print("Cost to D:", distances["D"])
